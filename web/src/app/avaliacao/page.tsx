@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { AuthGate } from "@/components/AuthGate";
 import { CircumferenceGuide, SkinfoldGuide } from "@/components/MeasurementGuides";
+import { PageHeader } from "@/components/PageHeader";
 import { ageFromBirthDate } from "@/lib/age";
 import { getSessionId } from "@/lib/auth";
 import { calcBmi, calcIcq, calcPollock3, calcPollock7 } from "@/lib/calc";
@@ -224,20 +225,18 @@ export default function AvaliacaoPage() {
 
   return (
     <AuthGate>
-      <div className="mx-auto max-w-4xl">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <h2 className="font-display text-3xl font-bold tracking-tight">Avaliação</h2>
-            <p className="mt-1 text-sm text-slate-500">
-              IMC (OMS), circunferências, ICQ, Pollock 3/7 e bioimpedância.
-            </p>
-          </div>
-          {editingId != null && (
-            <button type="button" className="btn-ghost" onClick={resetForm}>
-              Nova avaliação
-            </button>
-          )}
-        </div>
+      <div className="page">
+        <PageHeader
+          title="Avaliação"
+          description="IMC (OMS), circunferências, ICQ, Pollock 3/7 e bioimpedância."
+          actions={
+            editingId != null ? (
+              <button type="button" className="btn-ghost" onClick={resetForm}>
+                Nova avaliação
+              </button>
+            ) : undefined
+          }
+        />
 
         {!profileOk && (
           <p className="card mt-4 text-sm text-[var(--warn)]">
@@ -337,7 +336,7 @@ export default function AvaliacaoPage() {
                   ))}
                 </div>
                 {icq && (
-                  <p className="mt-4 rounded-lg bg-slate-50 px-3 py-2 text-sm">
+                  <p className="mt-4 rounded-lg bg-[var(--bg)] px-3 py-2 text-sm">
                     ICQ{" "}
                     <span className="font-mono-num font-semibold">{icq.icq}</span> —{" "}
                     {icq.label}
@@ -360,7 +359,7 @@ export default function AvaliacaoPage() {
                 <option value="">Não calcular</option>
               </select>
             </div>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs muted">
               {pollock === "pollock3" && sex === "masculino" &&
                 "Homem: peitoral + abdômen + coxa."}
               {pollock === "pollock3" && sex === "feminino" &&
@@ -414,7 +413,7 @@ export default function AvaliacaoPage() {
 
           <section className="card space-y-4">
             <h3 className="font-semibold">Bioimpedância (inserção direta)</h3>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs muted">
               Se informar %BF da balança, ele tem prioridade sobre o Pollock no resumo salvo.
             </p>
             <div className="grid gap-3 sm:grid-cols-3">
@@ -456,7 +455,7 @@ export default function AvaliacaoPage() {
               </div>
             </div>
             {bodyFatDisplay && (
-              <p className="text-sm text-slate-600">
+              <p className="text-sm muted">
                 Resumo: %BF{" "}
                 <span className="font-mono-num font-semibold">{bodyFatDisplay.pct}%</span>
                 {fatMass != null && (
@@ -497,7 +496,7 @@ export default function AvaliacaoPage() {
         <section className="card mt-8">
           <h3 className="font-semibold">Histórico</h3>
           {list.length === 0 ? (
-            <p className="mt-3 text-sm text-slate-500">Nenhuma avaliação ainda.</p>
+            <p className="mt-3 text-sm muted">Nenhuma avaliação ainda.</p>
           ) : (
             <ul className="mt-3 divide-y divide-[var(--line)]">
               {list.map((a) => (
@@ -517,7 +516,7 @@ export default function AvaliacaoPage() {
                         </>
                       )}
                     </p>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs muted">
                       {a.bodyFatPct != null && (
                         <>%BF {a.bodyFatPct}% ({a.bodyFatSource || "—"}) · </>
                       )}

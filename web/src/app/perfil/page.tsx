@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { AuthGate } from "@/components/AuthGate";
+import { PageHeader } from "@/components/PageHeader";
 import { ageFromBirthDate } from "@/lib/age";
 import { getSessionId } from "@/lib/auth";
 import {
@@ -79,15 +80,15 @@ export default function PerfilPage() {
 
   return (
     <AuthGate>
-      <div className="mx-auto max-w-2xl">
-        <h2 className="font-display text-3xl font-bold tracking-tight">Meu perfil</h2>
-        <p className="mt-1 text-sm text-slate-500">
-          Dados seus — usados nos cálculos e no acompanhamento.
-        </p>
+      <div className="page-narrow">
+        <PageHeader
+          title="Meu perfil"
+          description="Dados seus — usados nos cálculos e no acompanhamento."
+        />
         {msg && <p className="mt-3 text-sm text-[var(--ok)]">{msg}</p>}
 
         {!profile ? (
-          <p className="mt-6 text-slate-500">Carregando…</p>
+          <p className="muted mt-6">Carregando…</p>
         ) : (
           <>
             <form onSubmit={saveProfile} className="card mt-6 space-y-4">
@@ -105,7 +106,7 @@ export default function PerfilPage() {
                     defaultValue={profile.birthDate}
                   />
                   {age != null && (
-                    <p className="mt-1 text-xs text-slate-500">{age} anos</p>
+                    <p className="mt-1 text-xs muted">{age} anos</p>
                   )}
                 </div>
                 <div>

@@ -177,18 +177,18 @@ function AnatomicalBody() {
       <defs>
         <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#99f6e4" />
-          <stop offset="55%" stopColor="#5eead4" />
+          <stop offset="55%" stopColor="#e8f5d8" />
           <stop offset="100%" stopColor="#2dd4bf" />
         </linearGradient>
         <linearGradient id="skinShade" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#14b8a6" stopOpacity="0.12" />
-          <stop offset="100%" stopColor="#0f766e" stopOpacity="0.22" />
+          <stop offset="100%" stopColor="#7ac143" stopOpacity="0.22" />
         </linearGradient>
       </defs>
 
-      <ellipse cx="110" cy="398" rx="36" ry="5" fill="#0f766e" opacity="0.1" />
+      <ellipse cx="110" cy="398" rx="36" ry="5" fill="#7ac143" opacity="0.1" />
 
-      <g fill="url(#skin)" stroke="#0f766e" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round">
+      <g fill="url(#skin)" stroke="#7ac143" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round">
         {/* cabeça */}
         <ellipse cx="110" cy="40" rx="16" ry="22" />
         {/* pescoço fino */}
@@ -255,16 +255,16 @@ function AnatomicalBody() {
         <path d="M78 120 C82 155 86 200 92 240 L110 240 L110 88 C96 92 84 102 78 120 Z" />
       </g>
 
-      <g fill="none" stroke="#0f766e" strokeWidth="1" opacity="0.3">
+      <g fill="none" stroke="#7ac143" strokeWidth="1" opacity="0.3">
         <path d="M88 90 C98 86 104 84 110 84 C116 84 122 86 132 90" />
         <path d="M110 98 L110 240" strokeDasharray="2 4" />
         <path d="M86 122 C96 130 104 132 110 132 C116 132 124 130 134 122" />
-        <circle cx="110" cy="198" r="2" fill="#0f766e" stroke="none" opacity="0.45" />
+        <circle cx="110" cy="198" r="2" fill="#7ac143" stroke="none" opacity="0.45" />
         <path d="M90 318 C96 321 102 321 106 318" />
         <path d="M114 318 C118 321 124 321 130 318" />
       </g>
 
-      <g fill="#5eead4" stroke="#0f766e" strokeWidth="1.4">
+      <g fill="#e8f5d8" stroke="#7ac143" strokeWidth="1.4">
         <ellipse cx="54" cy="205" rx="6" ry="8" />
         <ellipse cx="166" cy="205" rx="6" ry="8" />
       </g>
@@ -290,7 +290,7 @@ function Band({
       rx={rx}
       ry={ry}
       fill="none"
-      stroke={active ? "#b45309" : "#0f766e"}
+      stroke={active ? "#b45309" : "#7ac143"}
       strokeWidth={active ? 2.4 : 1.4}
       strokeDasharray={active ? "0" : "4 3"}
       opacity={active ? 1 : 0.45}
@@ -299,7 +299,7 @@ function Band({
 }
 
 function PinchMark({ cx, cy, active }: { cx: number; cy: number; active: boolean }) {
-  const color = active ? "#b45309" : "#0f766e";
+  const color = active ? "#b45309" : "#7ac143";
   return (
     <g transform={`translate(${cx} ${cy})`} opacity={active ? 1 : 0.7}>
       <path
@@ -335,7 +335,7 @@ function GuideSvg({
 
   return (
     <div className="overflow-hidden rounded-xl border border-[var(--line)] bg-white shadow-sm">
-      <div className="border-b border-[var(--line)] bg-[#f3f7f5] px-3 py-2">
+      <div className="soft-fill border-b border-[var(--line)] px-3 py-2">
         <p className="text-xs font-semibold uppercase tracking-wide text-[var(--teal)]">{title}</p>
       </div>
       <div className="p-3">
@@ -379,7 +379,7 @@ function GuideSvg({
                   cy={m.cy}
                   r={on ? 10 : 8}
                   fill={on ? "#b45309" : "#fff"}
-                  stroke={on ? "#b45309" : "#0f766e"}
+                  stroke={on ? "#b45309" : "#7ac143"}
                   strokeWidth="2"
                 />
                 <text
@@ -389,7 +389,7 @@ function GuideSvg({
                   dominantBaseline="middle"
                   fontSize={m.code.length > 1 ? 7 : 8}
                   fontWeight="700"
-                  fill={on ? "#fff" : "#0f766e"}
+                  fill={on ? "#fff" : "#7ac143"}
                   fontFamily="var(--font-dm-sans), system-ui, sans-serif"
                 >
                   {m.code}
@@ -404,12 +404,12 @@ function GuideSvg({
             <strong className="text-[#b45309]">{active.label}:</strong> {active.tip}
           </p>
         ) : (
-          <p className="mt-2 text-xs text-slate-500">
+          <p className="mt-2 text-xs muted">
             Foque um campo ao lado — a faixa/ponto acende no desenho.
           </p>
         )}
 
-        <ul className="mt-3 grid grid-cols-2 gap-x-2 gap-y-1.5 text-[11px] leading-snug text-slate-600">
+        <ul className="mt-3 grid grid-cols-2 gap-x-2 gap-y-1.5 text-[11px] leading-snug muted">
           {markers.map((m) => (
             <li
               key={m.key}

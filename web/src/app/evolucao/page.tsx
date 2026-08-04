@@ -13,6 +13,7 @@ import {
   YAxis,
 } from "recharts";
 import { AuthGate } from "@/components/AuthGate";
+import { PageHeader } from "@/components/PageHeader";
 import { getSessionId } from "@/lib/auth";
 import { getAssessmentsByUserId, type Assessment } from "@/lib/db";
 
@@ -52,14 +53,14 @@ export default function EvolucaoPage() {
 
   return (
     <AuthGate>
-      <div className="mx-auto max-w-5xl">
-        <h2 className="font-display text-3xl font-bold tracking-tight">Evolução</h2>
-        <p className="mt-1 text-sm text-slate-500">
-          Gráficos a partir das suas avaliações salvas.
-        </p>
+      <div className="page-wide">
+        <PageHeader
+          title="Evolução"
+          description="Gráficos a partir das suas avaliações salvas."
+        />
 
         {list.length < 1 ? (
-          <div className="card mt-6 text-sm text-slate-600">
+          <div className="card muted mt-6 text-sm">
             Ainda não há avaliações.{" "}
             <Link href="/avaliacao" className="font-semibold text-[var(--teal)] underline">
               Registrar a primeira
@@ -106,7 +107,7 @@ export default function EvolucaoPage() {
                     <XAxis dataKey="date" tick={{ fontSize: 12 }} />
                     <YAxis tick={{ fontSize: 12 }} domain={["auto", "auto"]} />
                     <Tooltip />
-                    <Line type="monotone" dataKey="peso" stroke="#0f766e" strokeWidth={2} dot />
+                    <Line type="monotone" dataKey="peso" stroke="#7ac143" strokeWidth={2} dot />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -139,7 +140,7 @@ export default function EvolucaoPage() {
                     <YAxis tick={{ fontSize: 12 }} />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="cintura" name="Cintura" stroke="#0f766e" strokeWidth={2} connectNulls />
+                    <Line type="monotone" dataKey="cintura" name="Cintura" stroke="#7ac143" strokeWidth={2} connectNulls />
                     <Line type="monotone" dataKey="quadril" name="Quadril" stroke="#334155" strokeWidth={2} connectNulls />
                   </LineChart>
                 </ResponsiveContainer>

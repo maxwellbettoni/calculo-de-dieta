@@ -3,18 +3,18 @@
 @tailwind utilities;
 
 :root {
-  --bg: #f3f7f5;
-  --ink: #0c1f1c;
-  --teal: #0f766e;
-  --teal-deep: #115e59;
-  --teal-soft: #ccfbf1;
-  --line: #d8e4df;
+  --bg: #f5f7f4;
+  --ink: #1a2e1c;
+  --teal: #7ac143;
+  --teal-deep: #6db33f;
+  --teal-soft: #e8f5d8;
+  --line: #dce6d6;
   --warn: #b45309;
   --ok: #15803d;
   --background: var(--bg);
   --foreground: var(--ink);
   --card: #ffffff;
-  --muted: #5b6f6a;
+  --muted: #5f7260;
 }
 
 body {
@@ -66,13 +66,13 @@ body {
   padding: 0.7rem 1.1rem;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #334155;
+  color: var(--ink);
   cursor: pointer;
   text-decoration: none;
 }
 
 .btn-ghost:hover {
-  background: #f8fafc;
+  background: var(--teal-soft);
 }
 
 .input {
@@ -88,7 +88,7 @@ body {
 
 .input:focus {
   border-color: var(--teal);
-  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+  box-shadow: 0 0 0 3px rgba(122, 193, 67, 0.22);
 }
 
 .label {
@@ -96,7 +96,7 @@ body {
   margin-bottom: 0.35rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #334155;
+  color: var(--ink);
 }
 
 .card {
@@ -104,7 +104,39 @@ body {
   border: 1px solid var(--line);
   background: var(--card);
   padding: 1.35rem;
-  box-shadow: 0 10px 30px rgba(12, 31, 28, 0.04);
+  box-shadow: 0 10px 30px rgba(26, 46, 28, 0.04);
+}
+
+.page {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 56rem;
+}
+
+.page-wide {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 64rem;
+}
+
+.page-narrow {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 36rem;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.soft-fill {
+  background: var(--bg);
+}
+
+.accent-panel {
+  border-radius: 1rem;
+  border: 2px solid var(--teal);
+  background: var(--teal-soft);
 }
 
 @media print {

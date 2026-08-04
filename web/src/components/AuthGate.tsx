@@ -20,7 +20,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
 
   if (!ready) {
     return (
-      <div className="grid min-h-screen place-items-center bg-[var(--bg)] text-slate-500">
+      <div className="muted grid min-h-screen place-items-center bg-[var(--bg)]">
         Carregando…
       </div>
     );

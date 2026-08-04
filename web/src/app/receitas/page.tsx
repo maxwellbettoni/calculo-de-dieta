@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { AuthGate } from "@/components/AuthGate";
+import { PageHeader } from "@/components/PageHeader";
 import { getSessionId } from "@/lib/auth";
 import { db, ensureRecipesSeeded, type Recipe } from "@/lib/db";
 
@@ -74,11 +75,11 @@ export default function ReceitasPage() {
 
   return (
     <AuthGate>
-      <div className="mx-auto max-w-4xl">
-        <h2 className="font-display text-3xl font-bold tracking-tight">Receitas</h2>
-        <p className="mt-1 text-sm text-slate-500">
-          Receitas saudáveis prontas + as que você guardar no dia a dia.
-        </p>
+      <div className="page">
+        <PageHeader
+          title="Receitas"
+          description="Receitas saudáveis prontas + as que você guardar no dia a dia."
+        />
         {msg && <p className="mt-2 text-sm text-[var(--ok)]">{msg}</p>}
 
         <div className="card mt-6">
@@ -96,7 +97,7 @@ export default function ReceitasPage() {
 
         <div className="mt-4 space-y-3">
           {filtered.length === 0 ? (
-            <p className="card text-sm text-slate-500">Nenhuma receita encontrada.</p>
+            <p className="card text-sm muted">Nenhuma receita encontrada.</p>
           ) : (
             filtered.map((r) => (
               <article key={r.id} className="card">
@@ -107,33 +108,33 @@ export default function ReceitasPage() {
                 >
                   <div>
                     <p className="font-semibold">{r.name}</p>
-                    <p className="mt-1 text-xs text-slate-500">
+                    <p className="mt-1 text-xs muted">
                       {r.category} · {r.prepMinutes} min · {r.servings} porção(ões)
                       {r.isSeed ? " · pronta" : ""}
                     </p>
                     <p className="mt-1 text-xs text-[var(--teal)]">
                       <span className="font-mono-num font-semibold">{r.kcal} kcal</span>
-                      <span className="mx-1.5 text-teal-600/40">·</span>
+                      <span className="mx-1.5 text-[var(--teal)]/40">·</span>
                       Proteína <span className="font-mono-num font-semibold">{r.protein} g</span>
-                      <span className="mx-1.5 text-teal-600/40">·</span>
+                      <span className="mx-1.5 text-[var(--teal)]/40">·</span>
                       Carboidrato <span className="font-mono-num font-semibold">{r.carbs} g</span>
-                      <span className="mx-1.5 text-teal-600/40">·</span>
+                      <span className="mx-1.5 text-[var(--teal)]/40">·</span>
                       Gordura <span className="font-mono-num font-semibold">{r.fat} g</span>
-                      <span className="ml-1 text-slate-400">(por porção)</span>
+                      <span className="ml-1 muted">(por porção)</span>
                     </p>
                   </div>
-                  <span className="text-slate-400">{openId === r.id ? "−" : "+"}</span>
+                  <span className="muted">{openId === r.id ? "−" : "+"}</span>
                 </button>
                 {openId === r.id && (
                   <div className="mt-4 border-t border-[var(--line)] pt-4 text-sm">
                     <p className="font-medium">Ingredientes</p>
-                    <ul className="mt-1 list-disc space-y-0.5 pl-5 text-slate-600">
+                    <ul className="mt-1 list-disc space-y-0.5 pl-5 muted">
                       {r.ingredients.map((i) => (
                         <li key={`${r.id}-${i}`}>{i}</li>
                       ))}
                     </ul>
                     <p className="mt-3 font-medium">Modo de preparo</p>
-                    <p className="mt-1 whitespace-pre-wrap text-slate-600">{r.steps}</p>
+                    <p className="mt-1 whitespace-pre-wrap muted">{r.steps}</p>
                     {!r.isSeed && r.id && (
                       <button
                         type="button"

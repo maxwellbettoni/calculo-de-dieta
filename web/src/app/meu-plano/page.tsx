@@ -5,6 +5,7 @@ import { FormEvent, Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { AuthGate } from "@/components/AuthGate";
 import { MealKcalLimitBar } from "@/components/MealKcalLimit";
+import { PageHeader } from "@/components/PageHeader";
 import { getSessionId } from "@/lib/auth";
 import {
   ACTIVITY_LABELS,
@@ -51,7 +52,7 @@ export default function MeuPlanoPage() {
     <Suspense
       fallback={
         <AuthGate>
-          <p className="text-slate-500">Carregando plano…</p>
+          <p className="muted">Carregando plano…</p>
         </AuthGate>
       }
     >
@@ -359,25 +360,23 @@ function MeuPlanoInner() {
   if (!plan) {
     return (
       <AuthGate>
-        <p className="text-slate-500">Carregando plano…</p>
+        <p className="muted">Carregando plano…</p>
       </AuthGate>
     );
   }
 
   return (
     <AuthGate>
-      <div className="mx-auto max-w-5xl">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <h2 className="font-display text-3xl font-bold tracking-tight">Meu plano</h2>
-            <p className="mt-1 text-sm text-slate-500">
-              Registre refeições, metas calóricas, água e suplementos.
-            </p>
-          </div>
-          <button type="button" className="btn-ghost text-sm" onClick={duplicatePlan}>
-            Duplicar plano
-          </button>
-        </div>
+      <div className="page-wide">
+        <PageHeader
+          title="Meu plano"
+          description="Registre refeições, metas calóricas, água e suplementos."
+          actions={
+            <button type="button" className="btn-ghost text-sm" onClick={duplicatePlan}>
+              Duplicar plano
+            </button>
+          }
+        />
 
         <div className="mt-4 flex flex-wrap gap-2">
           {(
@@ -491,7 +490,7 @@ function MeuPlanoInner() {
                   </button>
                 ))}
               </div>
-              <p className="mt-2 text-xs text-slate-500">
+              <p className="mt-2 text-xs muted">
                 Ajusta a meta a partir do GET: −500 perder · 0 manter · +300 ganhar.
               </p>
             </div>
@@ -561,7 +560,7 @@ function MeuPlanoInner() {
                 </div>
               </div>
               {macros && (
-                <p className="mt-2 text-sm text-slate-600">
+                <p className="mt-2 text-sm muted">
                   ≈ Proteína {macros.proteinG} g · Carboidrato {macros.carbG} g · Gordura{" "}
                   {macros.fatG} g
                   {!macros.ok && <span className="text-red-600"> — soma ≠ 100%</span>}
@@ -587,7 +586,7 @@ function MeuPlanoInner() {
 
         {tab === "cardapio" && (
           <div className="mt-6 space-y-6">
-            <div className="rounded-2xl border-2 border-[var(--teal)] bg-[var(--teal-soft)] px-5 py-5">
+            <div className="accent-panel px-5 py-5">
               <p className="text-xs font-semibold uppercase tracking-wider text-[var(--teal)]">
                 Modelo do cardápio
               </p>
@@ -615,7 +614,7 @@ function MeuPlanoInner() {
             )}
 
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="text-sm text-slate-600">Limite de kcal por refeição</p>
+              <p className="text-sm muted">Limite de kcal por refeição</p>
               <button
                 type="button"
                 className="text-sm font-semibold text-[var(--teal)] underline"
@@ -653,7 +652,7 @@ function MeuPlanoInner() {
                       {meal.time}
                     </p>
                     <p className="mt-1 font-display text-lg font-bold">{meal.name}</p>
-                    <p className="mt-2 font-mono-num text-sm text-slate-600">
+                    <p className="mt-2 font-mono-num text-sm muted">
                       {meal.kcalLimit
                         ? `${tot.kcal} / ${meal.kcalLimit} kcal`
                         : `${tot.kcal} kcal`}{" "}
@@ -712,11 +711,11 @@ function MeuPlanoInner() {
                   return (
                     <li
                       key={f.id}
-                      className="flex items-center justify-between gap-3 px-3 py-3 hover:bg-[#f3f7f5]"
+                      className="flex items-center justify-between gap-3 px-3 py-3 hover:bg-[var(--bg)]"
                     >
                       <div>
                         <p className="font-medium">{f.name}</p>
-                        <p className="text-xs text-slate-500">
+                        <p className="text-xs muted">
                           {f.kcal} kcal/100g · {f.category}
                           {hits.length > 0 && (
                             <span className="ml-2 text-[var(--warn)]">⚠ {hits.join(", ")}</span>
@@ -734,7 +733,7 @@ function MeuPlanoInner() {
                   );
                 })}
                 {filteredFoods.length === 0 && (
-                  <li className="px-3 py-6 text-center text-sm text-slate-500">
+                  <li className="px-3 py-6 text-center text-sm muted">
                     Nenhum alimento. Tente outro nome.
                   </li>
                 )}
@@ -757,7 +756,7 @@ function MeuPlanoInner() {
                     <div>
                       <p className="font-display text-xl font-bold">
                         {meal.name}{" "}
-                        <span className="text-base font-normal text-slate-500">{meal.time}</span>
+                        <span className="text-base font-normal muted">{meal.time}</span>
                       </p>
                       <p className="mt-1 font-mono-num text-sm text-[var(--teal)]">
                         {tot.kcal} kcal · Proteína {tot.protein}g · Carboidrato {tot.carbs}g ·
@@ -848,11 +847,11 @@ function MeuPlanoInner() {
                               <div>
                                 <p className="font-medium">
                                   {item.foodName}{" "}
-                                  <span className="font-mono-num text-slate-500">
+                                  <span className="font-mono-num muted">
                                     {item.grams} g
                                   </span>
                                 </p>
-                                <p className="text-xs font-mono-num text-slate-500">
+                                <p className="text-xs font-mono-num muted">
                                   {n.kcal} kcal · Proteína {n.protein}g · Carboidrato {n.carbs}g ·
                                   Gordura {n.fat}g
                                   {hits.length > 0 && (
@@ -860,7 +859,7 @@ function MeuPlanoInner() {
                                   )}
                                 </p>
                                 {item.substitutions.length > 0 && (
-                                  <p className="mt-1 text-xs text-slate-500">
+                                  <p className="mt-1 text-xs muted">
                                     Substituições:{" "}
                                     {item.substitutions
                                       .map((s) => `${s.name} (${s.grams}g)`)
@@ -904,7 +903,7 @@ function MeuPlanoInner() {
           <div className="mt-6 space-y-6">
             <section className="card">
               <h3 className="font-semibold">Hidratação</h3>
-              <p className="mt-2 text-sm text-slate-600">
+              <p className="mt-2 text-sm muted">
                 Recomendado:{" "}
                 <span className="font-mono-num font-semibold text-[var(--teal)]">{plan.waterMl} ml</span>
                 /dia ({plan.waterMlPerKg} ml/kg × {plan.weightKg} kg). Ajuste em Metas.
@@ -935,14 +934,14 @@ function MeuPlanoInner() {
                 </button>
               </form>
               {plan.supplements.length === 0 ? (
-                <p className="text-sm text-slate-500">Nenhum suplemento prescrito.</p>
+                <p className="text-sm muted">Nenhum suplemento prescrito.</p>
               ) : (
                 <ul className="divide-y divide-[var(--line)] text-sm">
                   {plan.supplements.map((s) => (
                     <li key={s.id} className="flex justify-between gap-2 py-2">
                       <div>
                         <p className="font-medium">{s.name}</p>
-                        <p className="text-xs text-slate-500">
+                        <p className="text-xs muted">
                           {s.dose} · {s.time} · {s.form}
                         </p>
                       </div>

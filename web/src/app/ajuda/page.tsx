@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { AuthGate } from "@/components/AuthGate";
+import { PageHeader } from "@/components/PageHeader";
 
 const SECTIONS: {
   title: string;
@@ -130,15 +131,13 @@ const SECTIONS: {
 export default function AjudaPage() {
   return (
     <AuthGate>
-      <div className="mx-auto max-w-3xl">
-        <h2 className="font-display text-3xl font-bold tracking-tight">Ajuda</h2>
-        <p className="mt-2 text-sm text-slate-600">
-          Resumo do <strong>Calculo de Dieta</strong>: app de autoacompanhamento. Você
-          monta a própria dieta, registra medidas e vê a evolução — sem nutricionista no
-          meio. Os dados ficam no seu navegador (IndexedDB).
-        </p>
+      <div className="page">
+        <PageHeader
+          title="Ajuda"
+          description="Resumo do Calculo de Dieta: app de autoacompanhamento. Você monta a própria dieta, registra medidas e vê a evolução — sem nutricionista no meio. Os dados ficam no seu navegador (IndexedDB)."
+        />
 
-        <section className="card mt-6 space-y-2 text-sm text-slate-700">
+        <section className="card mt-6 space-y-2 text-sm text-[var(--ink)]">
           <h3 className="font-semibold text-base">Fluxo sugerido</h3>
           <ol className="list-decimal space-y-1 pl-5">
             <li>
@@ -175,8 +174,8 @@ export default function AjudaPage() {
                   Abrir →
                 </Link>
               </div>
-              <p className="mt-2 text-sm text-slate-600">{s.body}</p>
-              <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-slate-700">
+              <p className="mt-2 text-sm muted">{s.body}</p>
+              <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-[var(--ink)]">
                 {s.bullets.map((b) => (
                   <li key={b}>{b}</li>
                 ))}
@@ -185,7 +184,7 @@ export default function AjudaPage() {
           ))}
         </div>
 
-        <section className="card mt-6 text-sm text-slate-600">
+        <section className="card mt-6 text-sm muted">
           <h3 className="font-semibold text-[var(--ink)]">Siglas rápidas</h3>
           <ul className="mt-2 space-y-1">
             <li>
@@ -207,7 +206,7 @@ export default function AjudaPage() {
               <strong>Macros</strong> — proteína, carboidrato e gordura (em gramas ou %).
             </li>
           </ul>
-          <p className="mt-4 text-xs text-slate-400">
+          <p className="muted mt-4 text-xs">
             O app não substitui orientação médica ou nutricional profissional.
           </p>
         </section>

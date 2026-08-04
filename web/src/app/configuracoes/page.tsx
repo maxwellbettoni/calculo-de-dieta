@@ -10,6 +10,6 @@ export default function ConfigRedirect() {
     router.replace("/conta");
   }, [router]);
   return (
-    <div className="grid min-h-screen place-items-center text-slate-500">Abrindo…</div>
+    <div className="muted grid min-h-screen place-items-center bg-[var(--bg)]">Abrindo…</div>
   );
 }

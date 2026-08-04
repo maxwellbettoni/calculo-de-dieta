@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { AuthGate } from "@/components/AuthGate";
 import { MealKcalLimitBar } from "@/components/MealKcalLimit";
+import { PageHeader } from "@/components/PageHeader";
 import { getSessionId } from "@/lib/auth";
 import { createMealDayAutomatic } from "@/lib/auto-meals";
 import {
@@ -233,11 +234,11 @@ export default function RefeicoesPage() {
 
   return (
     <AuthGate>
-      <div className="mx-auto max-w-4xl">
-        <h2 className="font-display text-3xl font-bold tracking-tight">Refeições</h2>
-        <p className="mt-1 text-sm text-slate-500">
-          Cardápio de cada dia — pode criar automático e mudar só o que quiser.
-        </p>
+      <div className="page">
+        <PageHeader
+          title="Refeições"
+          description="Cardápio de cada dia — pode criar automático e mudar só o que quiser."
+        />
 
         <div className="card mt-6 flex flex-wrap items-center gap-3">
           <button
@@ -258,7 +259,7 @@ export default function RefeicoesPage() {
               value={date}
               onChange={(e) => setDate(e.target.value || todayISODate())}
             />
-            <p className="mt-1 text-xs capitalize text-slate-500">
+            <p className="mt-1 text-xs capitalize muted">
               {formatDateLabel(date)}
               {isToday ? " · hoje" : ""}
             </p>
@@ -285,9 +286,9 @@ export default function RefeicoesPage() {
         {err && <p className="mt-3 text-sm text-red-600">{err}</p>}
 
         {!loaded ? (
-          <p className="mt-8 text-slate-500">Carregando…</p>
+          <p className="mt-8 muted">Carregando…</p>
         ) : !mealDay ? (
-          <div className="mt-6 rounded-2xl border-2 border-[var(--teal)] bg-[var(--teal-soft)] px-5 py-8 text-center">
+          <div className="accent-panel mt-6 px-5 py-8 text-center">
             <h3 className="font-display text-2xl font-bold text-[var(--teal-deep)]">
               Criar cardápio deste dia
             </h3>
@@ -313,7 +314,7 @@ export default function RefeicoesPage() {
                 Criar dia em branco
               </button>
             </div>
-            <p className="mt-4 text-xs text-slate-600">
+            <p className="mt-4 text-xs muted">
               Meta em{" "}
               <Link href="/meu-plano?tab=metas" className="underline text-[var(--teal)]">
                 Meu plano
@@ -323,7 +324,7 @@ export default function RefeicoesPage() {
         ) : (
           <div className="mt-6 space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[var(--line)] bg-white px-4 py-3">
-              <p className="text-sm text-slate-600">
+              <p className="text-sm muted">
                 Cardápio deste dia
                 {mealDay.fromPlan ? " · copiado do modelo" : " · gerado automaticamente"}
               </p>
@@ -349,7 +350,7 @@ export default function RefeicoesPage() {
             )}
 
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="text-sm text-slate-600">Limite de kcal por refeição</p>
+              <p className="text-sm muted">Limite de kcal por refeição</p>
               <button
                 type="button"
                 className="text-sm font-semibold text-[var(--teal)] underline"
@@ -387,7 +388,7 @@ export default function RefeicoesPage() {
                       {meal.time}
                     </p>
                     <p className="mt-1 font-display text-lg font-bold">{meal.name}</p>
-                    <p className="mt-2 font-mono-num text-sm text-slate-600">
+                    <p className="mt-2 font-mono-num text-sm muted">
                       {meal.kcalLimit
                         ? `${tot.kcal} / ${meal.kcalLimit} kcal`
                         : `${tot.kcal} kcal`}{" "}
@@ -445,11 +446,11 @@ export default function RefeicoesPage() {
                   return (
                     <li
                       key={f.id}
-                      className="flex items-center justify-between gap-3 px-3 py-3 hover:bg-[#f3f7f5]"
+                      className="flex items-center justify-between gap-3 px-3 py-3 hover:bg-[var(--bg)]"
                     >
                       <div>
                         <p className="font-medium">{f.name}</p>
-                        <p className="text-xs text-slate-500">
+                        <p className="text-xs muted">
                           {f.kcal} kcal/100g · {f.category}
                           {hits.length > 0 && (
                             <span className="ml-2 text-[var(--warn)]">⚠ {hits.join(", ")}</span>
@@ -467,7 +468,7 @@ export default function RefeicoesPage() {
                   );
                 })}
                 {filteredFoods.length === 0 && (
-                  <li className="px-3 py-6 text-center text-sm text-slate-500">
+                  <li className="px-3 py-6 text-center text-sm muted">
                     Nenhum alimento. Tente outro nome.
                   </li>
                 )}
@@ -520,7 +521,7 @@ export default function RefeicoesPage() {
                   </div>
                   <MealKcalLimitBar currentKcal={tot.kcal} limit={meal.kcalLimit} />
                   {meal.items.length === 0 ? (
-                    <p className="text-sm text-slate-500">Nenhum alimento nesta refeição.</p>
+                    <p className="text-sm muted">Nenhum alimento nesta refeição.</p>
                   ) : (
                     <ul className="divide-y divide-[var(--line)]">
                       {meal.items.map((item) => (
@@ -530,7 +531,7 @@ export default function RefeicoesPage() {
                         >
                           <div>
                             <p className="font-medium">{item.foodName}</p>
-                            <p className="font-mono-num text-xs text-slate-500">
+                            <p className="font-mono-num text-xs muted">
                               {Math.round((item.per100.kcal * item.grams) / 100)} kcal
                             </p>
                           </div>
@@ -543,7 +544,7 @@ export default function RefeicoesPage() {
                               }
                               aria-label="Gramas"
                             />
-                            <span className="text-xs text-slate-500">g</span>
+                            <span className="text-xs muted">g</span>
                             <button
                               type="button"
                               className="text-sm text-red-600 underline"

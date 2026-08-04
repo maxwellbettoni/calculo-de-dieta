@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { AuthGate } from "@/components/AuthGate";
+import { PageHeader } from "@/components/PageHeader";
 import { getSessionId, hashPassword } from "@/lib/auth";
 import { exportUserBackup, importUserBackup } from "@/lib/backup";
 import { db, ensureSettings, type BackupPayload, type UserSettings } from "@/lib/db";
@@ -105,11 +106,11 @@ export default function ContaPage() {
 
   return (
     <AuthGate>
-      <div className="mx-auto max-w-xl">
-        <h2 className="font-display text-3xl font-bold tracking-tight">Conta</h2>
-        <p className="mt-1 text-sm text-slate-500">
-          Nome, senha e backup para levar seus dados a outro aparelho.
-        </p>
+      <div className="page-narrow">
+        <PageHeader
+          title="Conta"
+          description="Nome, senha e backup para levar seus dados a outro aparelho."
+        />
         {msg && <p className="mt-3 text-sm text-[var(--ok)]">{msg}</p>}
         {err && <p className="mt-3 text-sm text-red-600">{err}</p>}
 
@@ -166,7 +167,7 @@ export default function ContaPage() {
 
         <section className="card mt-6 space-y-4">
           <h3 className="font-semibold">Lembretes</h3>
-          <p className="text-sm text-slate-600">
+          <p className="text-sm muted">
             Avisa na hora da refeição (pelo horário do plano) e para beber água. O app
             precisa estar aberto ou em segundo plano no navegador.
           </p>
@@ -274,7 +275,7 @@ export default function ContaPage() {
 
         <section className="card mt-6 space-y-4">
           <h3 className="font-semibold">Backup</h3>
-          <p className="text-sm text-slate-600">
+          <p className="text-sm muted">
             Exporte um JSON e importe em outro navegador para continuar o acompanhamento.
           </p>
           <div className="flex flex-wrap gap-3">

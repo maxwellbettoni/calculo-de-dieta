@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { AuthGate } from "@/components/AuthGate";
+import { PageHeader } from "@/components/PageHeader";
 import { getSessionId } from "@/lib/auth";
 import { createMealDayAutomatic } from "@/lib/auto-meals";
 import { dayTotals, ensureDietPlan, planMacroTargets } from "@/lib/diet";
@@ -46,13 +47,13 @@ function ProgressBar({
   return (
     <div>
       <div className="mb-1 flex items-baseline justify-between text-sm">
-        <span className="text-slate-600">{label}</span>
-        <span className="font-mono-num text-slate-800">
+        <span className="muted">{label}</span>
+        <span className="font-mono-num text-[var(--ink)]">
           {Math.round(value * 10) / 10}
-          <span className="text-slate-400"> / {Math.round(max * 10) / 10} {unit}</span>
+          <span className="muted"> / {Math.round(max * 10) / 10} {unit}</span>
         </span>
       </div>
-      <div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
+      <div className="h-2.5 overflow-hidden rounded-full bg-[var(--line)]/50">
         <div
           className={`h-full rounded-full transition-all ${barColor}`}
           style={{ width: `${Math.min(100, pct)}%` }}
@@ -93,7 +94,7 @@ function statusFromPlan(
   if (target <= 0) {
     return {
       label: "Metas incompletas",
-      tone: "text-slate-600 bg-slate-50",
+      tone: "muted bg-[var(--bg)]",
       detail: "Salve uma meta calórica em Meu plano.",
     };
   }
@@ -192,33 +193,33 @@ export default function DashboardPage() {
 
   return (
     <AuthGate>
-      <div className="mx-auto max-w-5xl">
-        <p className="text-sm text-slate-500">Olá{name ? `, ${name}` : ""}</p>
-        <h2 className="mt-1 font-display text-3xl font-bold tracking-tight">Início</h2>
-        <p className="mt-2 max-w-xl text-sm text-slate-600">
-          Seu espaço para montar a dieta e acompanhar medidas e evolução.
-        </p>
+      <div className="page-wide">
+        <PageHeader
+          greeting={`Olá${name ? `, ${name}` : ""}`}
+          title="Início"
+          description="Seu espaço para montar a dieta e acompanhar medidas e evolução."
+        />
 
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
           <div className="card">
-            <p className="text-sm text-slate-500">Perfil</p>
-            <p className="mt-2 text-lg font-semibold text-[var(--teal)]">
+            <p className="muted text-sm">Perfil</p>
+            <p className="mt-2 text-lg font-semibold text-[var(--teal-deep)]">
               {profileReady ? "Preenchido" : "Completar"}
             </p>
           </div>
           <div className="card">
-            <p className="text-sm text-slate-500">Anamnese</p>
-            <p className="mt-2 text-lg font-semibold text-[var(--teal)]">
+            <p className="muted text-sm">Anamnese</p>
+            <p className="mt-2 text-lg font-semibold text-[var(--teal-deep)]">
               {hasAnamnesis ? "Salva" : "Pendente"}
             </p>
           </div>
           <div className="card">
-            <p className="text-sm text-slate-500">Último peso</p>
-            <p className="mt-2 text-lg font-semibold text-[var(--teal)] font-mono-num">
+            <p className="muted text-sm">Último peso</p>
+            <p className="mt-2 text-lg font-semibold text-[var(--teal-deep)] font-mono-num">
               {lastAssess ? `${lastAssess.weightKg} kg` : "—"}
             </p>
             {lastAssess?.bmi != null && (
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="muted mt-1 text-xs">
                 IMC {lastAssess.bmi}
                 {lastAssess.bmiLabel ? ` · ${lastAssess.bmiLabel}` : ""}
               </p>
@@ -226,12 +227,12 @@ export default function DashboardPage() {
           </div>
         </div>
         {profile?.goal?.trim() && (
-          <p className="mt-3 text-sm text-slate-600">
-            Objetivo: <span className="font-medium">{profile.goal}</span>
+          <p className="muted mt-3 text-sm">
+            Objetivo: <span className="font-medium text-[var(--ink)]">{profile.goal}</span>
           </p>
         )}
 
-        <section className="mt-6 rounded-2xl border-2 border-[var(--teal)] bg-[var(--teal-soft)] px-5 py-6">
+        <section className="accent-panel mt-6 px-5 py-6">
           <p className="text-xs font-semibold uppercase tracking-wider text-[var(--teal)]">
             Diário alimentar
           </p>
@@ -271,7 +272,7 @@ export default function DashboardPage() {
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
               <h3 className="font-semibold">Como estou na dieta</h3>
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="muted mt-1 text-sm">
                 Resumo do plano, cardápio e evolução recente.
               </p>
             </div>
@@ -279,11 +280,11 @@ export default function DashboardPage() {
               {status.label}
             </span>
           </div>
-          <p className="mt-3 text-sm text-slate-600">{status.detail}</p>
+          <p className="muted mt-3 text-sm">{status.detail}</p>
 
           {!plan ? (
-            <div className="mt-5 rounded-xl border border-dashed border-[var(--line)] bg-[#f3f7f5] px-4 py-6 text-center">
-              <p className="text-sm text-slate-600">
+            <div className="soft-fill mt-5 rounded-xl border border-dashed border-[var(--line)] px-4 py-6 text-center">
+              <p className="muted text-sm">
                 Ainda não há plano alimentar para resumir.
               </p>
               <Link href="/meu-plano" className="btn-primary mt-4 inline-flex">
@@ -293,37 +294,37 @@ export default function DashboardPage() {
           ) : (
             <>
               <div className="mt-5 grid gap-3 sm:grid-cols-4">
-                <div className="rounded-xl bg-[#f3f7f5] px-3 py-3">
-                  <p className="text-xs text-slate-500">
+                <div className="soft-fill rounded-xl px-3 py-3">
+                  <p className="muted text-xs">
                     Meta
                     {plan.goalMode
                       ? ` · ${GOAL_MODE_LABELS[plan.goalMode]}`
                       : ""}
                   </p>
-                  <p className="mt-1 font-mono-num text-xl font-semibold text-[var(--teal)]">
+                  <p className="mt-1 font-mono-num text-xl font-semibold text-[var(--teal-deep)]">
                     {plan.targetKcal}
-                    <span className="text-sm font-normal text-slate-500"> kcal</span>
+                    <span className="muted text-sm font-normal"> kcal</span>
                   </p>
                 </div>
-                <div className="rounded-xl bg-[#f3f7f5] px-3 py-3">
-                  <p className="text-xs text-slate-500">Cardápio</p>
-                  <p className="mt-1 font-mono-num text-xl font-semibold text-[var(--teal)]">
+                <div className="soft-fill rounded-xl px-3 py-3">
+                  <p className="muted text-xs">Cardápio</p>
+                  <p className="mt-1 font-mono-num text-xl font-semibold text-[var(--teal-deep)]">
                     {day?.kcal ?? 0}
-                    <span className="text-sm font-normal text-slate-500"> kcal</span>
+                    <span className="muted text-sm font-normal"> kcal</span>
                   </p>
                 </div>
-                <div className="rounded-xl bg-[#f3f7f5] px-3 py-3">
-                  <p className="text-xs text-slate-500">Água</p>
-                  <p className="mt-1 font-mono-num text-xl font-semibold text-[var(--teal)]">
+                <div className="soft-fill rounded-xl px-3 py-3">
+                  <p className="muted text-xs">Água</p>
+                  <p className="mt-1 font-mono-num text-xl font-semibold text-[var(--teal-deep)]">
                     {plan.waterMl}
-                    <span className="text-sm font-normal text-slate-500"> ml</span>
+                    <span className="muted text-sm font-normal"> ml</span>
                   </p>
                 </div>
-                <div className="rounded-xl bg-[#f3f7f5] px-3 py-3">
-                  <p className="text-xs text-slate-500">Refeições</p>
-                  <p className="mt-1 font-mono-num text-xl font-semibold text-[var(--teal)]">
+                <div className="soft-fill rounded-xl px-3 py-3">
+                  <p className="muted text-xs">Refeições</p>
+                  <p className="mt-1 font-mono-num text-xl font-semibold text-[var(--teal-deep)]">
                     {mealsFilled}
-                    <span className="text-sm font-normal text-slate-500">
+                    <span className="muted text-sm font-normal">
                       {" "}
                       / {(mealDay?.meals.length ?? plan.meals.length) || 0}
                     </span>
@@ -342,10 +343,10 @@ export default function DashboardPage() {
 
               <div className="mt-5 grid gap-3 border-t border-[var(--line)] pt-5 sm:grid-cols-2">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  <p className="muted text-xs font-semibold uppercase tracking-wide">
                     Próximo lembrete
                   </p>
-                  <p className="mt-2 text-sm text-slate-700">
+                  <p className="mt-2 text-sm text-[var(--ink)]">
                     {nextReminderPreview(plan, settings) ||
                       (settings?.remindersEnabled
                         ? "Nenhum restante hoje"
@@ -353,25 +354,25 @@ export default function DashboardPage() {
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  <p className="muted text-xs font-semibold uppercase tracking-wide">
                     Passos hoje
                   </p>
-                  <p className="mt-2 text-sm text-slate-700 font-mono-num">
+                  <p className="mt-2 text-sm text-[var(--ink)] font-mono-num">
                     {activity?.steps || 0} / {settings?.stepsGoal || 8000}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  <p className="muted text-xs font-semibold uppercase tracking-wide">
                     Evolução
                   </p>
                   {weightDelta == null ? (
-                    <p className="mt-2 text-sm text-slate-500">
+                    <p className="muted mt-2 text-sm">
                       {lastAssess
                         ? "Registre mais uma avaliação para ver a variação de peso."
                         : "Nenhuma avaliação ainda — comece em Avaliação."}
                     </p>
                   ) : (
-                    <p className="mt-2 text-sm text-slate-700">
+                    <p className="mt-2 text-sm text-[var(--ink)]">
                       Peso:{" "}
                       <span className="font-mono-num font-semibold">
                         {weightDelta > 0 ? "+" : ""}
@@ -394,10 +395,10 @@ export default function DashboardPage() {
                   )}
                 </div>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  <p className="muted text-xs font-semibold uppercase tracking-wide">
                     Suplementos
                   </p>
-                  <p className="mt-2 text-sm text-slate-700">
+                  <p className="mt-2 text-sm text-[var(--ink)]">
                     {plan.supplements.length
                       ? `${plan.supplements.length} no plano`
                       : "Nenhum suplemento cadastrado"}

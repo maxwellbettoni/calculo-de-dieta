@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { AuthGate } from "@/components/AuthGate";
+import { PageHeader } from "@/components/PageHeader";
 import { db, ensureFoodsSeeded, type Food } from "@/lib/db";
 
 const PAGE_SIZE = 50;
@@ -43,11 +44,11 @@ export default function AlimentosPage() {
 
   return (
     <AuthGate>
-      <div className="mx-auto max-w-4xl">
-        <h2 className="font-display text-3xl font-bold tracking-tight">Alimentos</h2>
-        <p className="mt-1 text-sm text-slate-500">
-          Tabela nutricional ({foods.length} itens) — valores por 100 g.
-        </p>
+      <div className="page">
+        <PageHeader
+          title="Alimentos"
+          description={`Tabela nutricional (${foods.length} itens) — valores por 100 g.`}
+        />
 
         <div className="card mt-6 grid gap-3 sm:grid-cols-2">
           <div>
@@ -77,10 +78,10 @@ export default function AlimentosPage() {
         </div>
 
         {filtered.length === 0 ? (
-          <p className="card mt-4 text-sm text-slate-500">Nenhum alimento encontrado.</p>
+          <p className="card mt-4 text-sm muted">Nenhum alimento encontrado.</p>
         ) : (
           <div className="card mt-4 overflow-x-auto p-0">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--line)] px-4 py-3 text-sm text-slate-600">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--line)] px-4 py-3 text-sm muted">
               <span>
                 Mostrando {(currentPage - 1) * PAGE_SIZE + 1}–
                 {Math.min(currentPage * PAGE_SIZE, filtered.length)} de {filtered.length}
@@ -94,7 +95,7 @@ export default function AlimentosPage() {
                 >
                   Anterior
                 </button>
-                <span className="min-w-[5.5rem] text-center text-xs text-slate-500">
+                <span className="min-w-[5.5rem] text-center text-xs muted">
                   Página {currentPage} / {totalPages}
                 </span>
                 <button
@@ -108,7 +109,7 @@ export default function AlimentosPage() {
               </div>
             </div>
             <table className="w-full min-w-[640px] text-left text-sm">
-              <thead className="border-b border-[var(--line)] bg-slate-50 text-xs uppercase text-slate-500">
+              <thead className="soft-fill border-b border-[var(--line)] text-xs uppercase muted">
                 <tr>
                   <th className="px-4 py-3">Alimento</th>
                   <th className="px-2 py-3">kcal</th>
@@ -121,10 +122,10 @@ export default function AlimentosPage() {
               </thead>
               <tbody className="divide-y divide-[var(--line)] font-mono-num">
                 {pageItems.map((f) => (
-                  <tr key={f.id} className="hover:bg-slate-50/80">
+                  <tr key={f.id} className="hover:bg-[var(--bg)]">
                     <td className="px-4 py-2 font-sans font-medium">
                       {f.name}
-                      <span className="ml-2 text-xs font-normal text-slate-400">{f.category}</span>
+                      <span className="ml-2 text-xs font-normal muted">{f.category}</span>
                     </td>
                     <td className="px-2 py-2">{f.kcal}</td>
                     <td className="px-2 py-2">{f.protein}</td>
@@ -146,7 +147,7 @@ export default function AlimentosPage() {
                 >
                   Anterior
                 </button>
-                <span className="text-xs text-slate-500">
+                <span className="text-xs muted">
                   Página {currentPage} / {totalPages}
                 </span>
                 <button

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AuthGate } from "@/components/AuthGate";
+import { PageHeader } from "@/components/PageHeader";
 import { getSessionId } from "@/lib/auth";
 import { dayTotals, ensureDietPlan, mealTotals, planMacroTargets } from "@/lib/diet";
 import {
@@ -48,12 +49,12 @@ export default function RelatoriosPage() {
 
   return (
     <AuthGate>
-      <div className="mx-auto max-w-3xl">
+      <div className="page">
         <div className="print:hidden">
-          <h2 className="font-display text-3xl font-bold tracking-tight">Relatórios</h2>
-          <p className="mt-1 text-sm text-slate-500">
-            Gere PDF pelo diálogo de impressão do navegador (Salvar como PDF / WhatsApp).
-          </p>
+          <PageHeader
+            title="Relatórios"
+            description="Gere PDF pelo diálogo de impressão do navegador (Salvar como PDF / WhatsApp)."
+          />
           <div className="mt-4 flex flex-wrap gap-2">
             {(
               [
@@ -87,11 +88,11 @@ export default function RelatoriosPage() {
               {kind === "avaliacao" && "Avaliação física"}
               {kind === "prontuario" && "Prontuário e metas"}
             </h3>
-            <p className="mt-1 text-sm text-slate-600">
+            <p className="mt-1 text-sm muted">
               {name}
               {profile?.goal ? ` · ${profile.goal}` : ""}
             </p>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs muted">
               Emitido em {new Date().toLocaleString("pt-BR")}
             </p>
           </header>
@@ -99,7 +100,7 @@ export default function RelatoriosPage() {
           {kind === "avaliacao" && (
             <div className="mt-4 space-y-2 text-sm">
               {!last ? (
-                <p className="text-slate-500">Nenhuma avaliação salva.</p>
+                <p className="muted">Nenhuma avaliação salva.</p>
               ) : (
                 <>
                   <p>
@@ -168,14 +169,14 @@ export default function RelatoriosPage() {
                   <div key={m.id} className="border-t border-[var(--line)] pt-3">
                     <p className="font-semibold">
                       {m.name} · {m.time}{" "}
-                      <span className="font-normal text-slate-500">({t.kcal} kcal)</span>
+                      <span className="font-normal muted">({t.kcal} kcal)</span>
                     </p>
                     <ul className="mt-1 space-y-1 text-xs">
                       {m.items.map((i) => (
                         <li key={i.id}>
                           • {i.foodName} — {i.grams}g
                           {i.substitutions.length > 0 && (
-                            <span className="text-slate-500">
+                            <span className="muted">
                               {" "}
                               | subst:{" "}
                               {i.substitutions.map((s) => `${s.name} ${s.grams}g`).join(", ")}
@@ -183,7 +184,7 @@ export default function RelatoriosPage() {
                           )}
                         </li>
                       ))}
-                      {m.items.length === 0 && <li className="text-slate-400">Sem itens</li>}
+                      {m.items.length === 0 && <li className="muted">Sem itens</li>}
                     </ul>
                   </div>
                 );
@@ -240,7 +241,7 @@ export default function RelatoriosPage() {
             </div>
           )}
 
-          <footer className="mt-8 border-t border-[var(--line)] pt-3 text-xs text-slate-400">
+          <footer className="mt-8 border-t border-[var(--line)] pt-3 text-xs muted">
             Documento pessoal — Calculo de Dieta. Não substitui orientação profissional de saúde.
           </footer>
         </article>

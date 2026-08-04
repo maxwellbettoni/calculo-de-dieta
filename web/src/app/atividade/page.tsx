@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { AuthGate } from "@/components/AuthGate";
+import { PageHeader } from "@/components/PageHeader";
 import { getSessionId } from "@/lib/auth";
 import { estimateExerciseKcal, EXERCISE_PRESETS } from "@/lib/exercise";
 import { todayISODate } from "@/lib/num";
@@ -119,12 +120,11 @@ export default function AtividadePage() {
 
   return (
     <AuthGate>
-      <div className="mx-auto max-w-3xl">
-        <h2 className="font-display text-3xl font-bold tracking-tight">Atividade</h2>
-        <p className="mt-1 text-sm text-slate-500">
-          Passos e exercícios do dia. Conexão direta com Apple Health / Google Fit não
-          está disponível no navegador — use registro manual ou importação.
-        </p>
+      <div className="page">
+        <PageHeader
+          title="Atividade"
+          description="Passos e exercícios do dia. Conexão direta com Apple Health / Google Fit não está disponível no navegador — use registro manual ou importação."
+        />
         {msg && <p className="mt-2 text-sm text-[var(--ok)]">{msg}</p>}
 
         <div className="card mt-6">
@@ -142,7 +142,7 @@ export default function AtividadePage() {
 
         <section className="card mt-4 space-y-4">
           <h3 className="font-semibold">Passos</h3>
-          <div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
+          <div className="h-2.5 overflow-hidden rounded-full bg-[var(--line)]/50">
             <div
               className="h-full rounded-full bg-[var(--teal)]"
               style={{ width: `${stepsPct}%` }}
@@ -151,7 +151,7 @@ export default function AtividadePage() {
           <p className="font-mono-num text-sm">
             {stepsN} / {goal} passos ({stepsPct}%)
             {day?.stepsSource === "import" && (
-              <span className="ml-2 text-xs text-slate-400">importado</span>
+              <span className="muted ml-2 text-xs">importado</span>
             )}
           </p>
           <form onSubmit={saveSteps} className="flex flex-wrap items-end gap-3">
@@ -172,7 +172,7 @@ export default function AtividadePage() {
 
         <section className="card mt-4 space-y-3">
           <h3 className="font-semibold">Importar de outro app</h3>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs muted">
             Cole um número, um JSON{" "}
             <code className="text-[var(--teal)]">{`{"steps":8500}`}</code> ou CSV{" "}
             <code className="text-[var(--teal)]">data,passos</code> exportado do seu app de
@@ -218,7 +218,7 @@ export default function AtividadePage() {
             </button>
           </form>
           {day && day.exercises.length === 0 ? (
-            <p className="text-sm text-slate-500">Nenhum exercício hoje.</p>
+            <p className="text-sm muted">Nenhum exercício hoje.</p>
           ) : (
             <ul className="divide-y divide-[var(--line)] text-sm">
               {day?.exercises.map((x) => (

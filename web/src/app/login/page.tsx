@@ -5,6 +5,31 @@ import { useRouter } from "next/navigation";
 import { isLoggedIn } from "@/lib/auth";
 import { loginViaGestor } from "@/lib/gestor-auth";
 
+function LeafMark({ className = "h-10 w-10" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden
+    >
+      <circle cx="20" cy="20" r="20" fill="var(--teal)" />
+      <path
+        d="M12 22c4-9 12-12 16-12-1 8-5 14-12 16-1-1-3-2-4-4z"
+        fill="white"
+        fillOpacity="0.95"
+      />
+      <path
+        d="M16 18c3 2 6 5 8 9"
+        stroke="var(--teal-deep)"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export default function LoginPage() {
   const router = useRouter();
   const [name, setName] = useState("");
@@ -31,39 +56,33 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 py-12">
       <div
-        className="absolute inset-0"
+        className="pointer-events-none absolute inset-0"
         style={{
-          background: "linear-gradient(155deg, #0f766e 0%, #134e4a 45%, #0c1f1c 100%)",
-        }}
-      />
-      <div
-        className="pointer-events-none absolute inset-0 opacity-35"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 15% 25%, rgba(204,251,241,0.4) 0%, transparent 42%), radial-gradient(circle at 90% 80%, rgba(125,211,252,0.2) 0%, transparent 40%)",
+          background:
+            "radial-gradient(ellipse 80% 50% at 50% -10%, rgba(122,193,67,0.18), transparent 55%), radial-gradient(circle at 90% 90%, rgba(232,245,216,0.9), transparent 40%), #f5f7f4",
         }}
       />
 
-      <div className="relative mx-auto grid min-h-screen max-w-5xl items-center gap-10 px-5 py-12 lg:grid-cols-2 lg:px-8">
-        <div className="text-white">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-200">
-            Para você
-          </p>
-          <h1 className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+      <div className="relative w-full max-w-[400px]">
+        <div className="mb-8 flex flex-col items-center text-center">
+          <LeafMark className="h-14 w-14" />
+          <h1 className="mt-4 font-display text-2xl font-bold tracking-tight text-[var(--ink)]">
             Calculo de Dieta
           </h1>
-          <p className="mt-4 max-w-md text-teal-100/90">
-            Monte sua dieta, registre medidas e acompanhe a evolução.
+          <p className="mt-2 text-sm text-[var(--muted)]">
+            Monte sua dieta e acompanhe a evolução
           </p>
         </div>
 
-        <div className="rounded-2xl border border-white/15 bg-white/95 p-7 shadow-2xl backdrop-blur-md sm:p-9">
-          <h2 className="font-display text-2xl font-bold text-slate-900">Entrar</h2>
-          <p className="mt-1 text-sm text-slate-500">Use o usuário e a senha que você recebeu.</p>
+        <div className="rounded-2xl border border-[var(--line)] bg-white p-7 shadow-[0_12px_40px_rgba(26,46,28,0.08)] sm:p-8">
+          <h2 className="font-display text-xl font-bold text-[var(--ink)]">Entrar</h2>
+          <p className="mt-1 text-sm text-[var(--muted)]">
+            Use o usuário e a senha que você recebeu.
+          </p>
 
-          <form onSubmit={onSubmit} className="mt-7 space-y-4">
+          <form onSubmit={onSubmit} className="mt-6 space-y-4">
             <div>
               <label className="label" htmlFor="name">
                 Usuário
@@ -93,7 +112,7 @@ export default function LoginPage() {
               />
             </div>
             {error && <p className="text-sm text-red-600">{error}</p>}
-            <button type="submit" className="btn-primary w-full py-3" disabled={loading}>
+            <button type="submit" className="btn-primary w-full py-3 text-base" disabled={loading}>
               {loading ? "Aguarde…" : "Entrar"}
             </button>
           </form>
